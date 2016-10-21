@@ -10,6 +10,14 @@ point::point(float ix, float iy) {
     circle.setPosition(x, y);
     circle.setFillColor(niceBlue);
 }
+point::point(sf::Vector2f vec) {
+    x = vec.x;
+    y = vec.y;
+    circle = sf::CircleShape(4, 10);
+    circle.setOrigin(circle.getRadius(), circle.getRadius());
+    circle.setPosition(x, y);
+    circle.setFillColor(niceBlue);
+}
 void point::draw(sf::RenderWindow & wind)
 {
     wind.draw(circle);
@@ -17,8 +25,6 @@ void point::draw(sf::RenderWindow & wind)
 sf::Vector2f point::getPosition() {
     return sf::Vector2f(x, y);
 }
-
-
 
 line::line(float x1, float y1, float x2, float y2) {
     x = (x1 + x2) / 2;
@@ -46,8 +52,6 @@ void line::draw(sf::RenderWindow & wind)
     wind.draw(rectangle);
 }
 
-
-
 triangle::triangle(float x1, float y1, float x2, float y2, float x3, float y3) {
     tri.setPointCount(3);
     tri.setPoint(0, sf::Vector2f(x1, y1));
@@ -61,11 +65,6 @@ triangle::triangle(point p1, point p2, point p3)
     tri.setPoint(0, p1.getPosition());
     tri.setPoint(1, p2.getPosition());
     tri.setPoint(2, p3.getPosition());
-}
-
-void triangle::setFillColor(sf::Color color)
-{
-    tri.setFillColor(color);
 }
 
 void triangle::draw(sf::RenderWindow & wind)

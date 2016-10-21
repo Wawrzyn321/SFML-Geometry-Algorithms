@@ -123,7 +123,7 @@ void triangulation(const vector<point> &sourcePoints, bool delayEnabled, bool is
 
 			if (!isConvex){
                 //reject the triangle
-				triangles[triangles.size() - 1].tri.setFillColor(sf::Color::Red);
+				triangles[triangles.size() - 1].setFillColor(sf::Color::Red);
 				start++;
                 triangles.erase(triangles.begin() + triangles.size() - 1);
                 continue;
@@ -131,7 +131,7 @@ void triangulation(const vector<point> &sourcePoints, bool delayEnabled, bool is
 
             bool noPointsIn = true;
 
-            triangles[triangles.size() - 1].tri.setFillColor(sf::Color::Green);
+            triangles[triangles.size() - 1].setFillColor(sf::Color::Green);
             for (unsigned int i = 0; i < verts.size(); i++)
                 if (i != start && i != middle && i != end)
                     if (isPointInTriangle(verts[i].getPosition(), verts[start].getPosition(), verts[middle].getPosition(), verts[end].getPosition()) && noPointsIn) {
@@ -145,7 +145,7 @@ void triangulation(const vector<point> &sourcePoints, bool delayEnabled, bool is
             }
             else {
                 //there's a point in triangle
-                triangles[triangles.size() - 1].tri.setFillColor(sf::Color::Red);
+                triangles[triangles.size() - 1].setFillColor(sf::Color::Red);
                 start++;
             }
 
@@ -160,7 +160,7 @@ void triangulation(const vector<point> &sourcePoints, bool delayEnabled, bool is
 			else{
                 //add triangle to set
 				verts.erase(verts.begin() + middle);
-				triangles[triangles.size() - 1].tri.setFillColor(sf::Color::White);
+				triangles[triangles.size() - 1].setFillColor(sf::Color::White);
 
                 if (delayEnabled) {
                     refreshWindow();
@@ -301,8 +301,8 @@ int main()
 				if (!intersectionPresent){
                     //complete the shape (there's no intersecting lines)
                     lines.push_back(line(points[0], points[points.size() - 1]));
-					//closeShape(points, delayEnabled, coolEnabled);
-                    triangulation(points);
+					triangulation(points, delayEnabled, coolEnabled);
+                    //triangulation(points);
 					canInteract = false;
 				}
 			}

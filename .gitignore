@@ -253,3 +253,4 @@ paket-files/
 /Bezier Curves/Bezier Curves/sfml-graphics-2.dll
 /Bezier Curves/Bezier Curves/sfml-system-2.dll
 /Bezier Curves/Bezier Curves/sfml-window-2.dll
+*.dll
