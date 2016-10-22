@@ -23,13 +23,5 @@ public:
     void draw(sf::RenderWindow &wind);
 };
 
-class triangle {
-public:
-    sf::ConvexShape tri;
-    triangle(float x1, float y1, float x2, float y2, float x3, float y3);
-    triangle(point p1, point p2, point p3);
-    void draw(sf::RenderWindow &wind);
-};
-
 
 #endif

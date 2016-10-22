@@ -51,23 +51,3 @@ void line::draw(sf::RenderWindow & wind)
 {
     wind.draw(rectangle);
 }
-
-triangle::triangle(float x1, float y1, float x2, float y2, float x3, float y3) {
-    tri.setPointCount(3);
-    tri.setPoint(0, sf::Vector2f(x1, y1));
-    tri.setPoint(1, sf::Vector2f(x2, y2));
-    tri.setPoint(2, sf::Vector2f(x3, y3));
-}
-
-triangle::triangle(point p1, point p2, point p3)
-{
-    tri.setPointCount(3);
-    tri.setPoint(0, p1.getPosition());
-    tri.setPoint(1, p2.getPosition());
-    tri.setPoint(2, p3.getPosition());
-}
-
-void triangle::draw(sf::RenderWindow & wind)
-{
-    wind.draw(tri);
-}
