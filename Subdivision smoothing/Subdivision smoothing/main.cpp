@@ -119,9 +119,14 @@ void dimShapes(vector<point> &points, vector<line> &lines, int minAlpha, float f
 }
 
 void showStartMessage() {
+    cout << "Polygon subdivision with smoothing" << endl;
     cout << "Press LBM to add points. When ready, press RBM to close the shape "
         "and start\n smoothing. You can adjust amount of smoothing by mouse "
         "scroll. Press RBM again to repeat subdivision, R to reset." << endl;
+}
+
+void updateTitle(float smoothingValue) {
+    window.setTitle("Subdivision smoothing, smoothing value: " + to_string(smoothingValue));
 }
 
 int main()
@@ -141,13 +146,15 @@ int main()
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-            //change value of t
-            if (event.type == sf::Event::MouseWheelMoved)
+            //change value of {smoothingValue}
+            if (event.type == sf::Event::MouseWheelMoved && isShapeClosed)
             {
+                //set {smoothingValue}
                 smoothingValue += smoothingValueDelta * event.mouseWheel.delta;
+                updateTitle(smoothingValue);
+                //update the subdivided polygon
                 subPoints = subdivide(currentPoints, smoothingValue);
                 subLines = getLines(subPoints);
-                window.setTitle("Subdivision smoothing, smoothing value: "+to_string(smoothingValue));
             }
 
             //exit
@@ -187,6 +194,10 @@ int main()
                     isShapeClosed = true;
                 }
                 else if (isShapeClosed) {
+                    //reset {smoothingValue}
+                    smoothingValue = 0.5;
+                    updateTitle(smoothingValue);
+
                     //subdivide again
                     currentPoints = subPoints;
                     currentLines = subLines;
