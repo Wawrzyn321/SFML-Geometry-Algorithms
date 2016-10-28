@@ -65,31 +65,33 @@ point *getFarthestPoint(LineEquation lineEquation, vector<point*> v) {
 }
 
 //recurrent subroutine to {QuickHull}
-vector<point*> QuickHullSub(point A, point B, vector<point*> points)
+vector<point*> QuickHullSub(point *A, point *B, vector<point*> points)
 {
-    point *C = getFarthestPoint(getLineEquation(A.getPosition(), B.getPosition()), points);
+    point *C = getFarthestPoint(getLineEquation(A->getPosition(), B->getPosition()), points);
+    if (!C)
+        return vector<point*>();
 
     vector<point*> s1, s2, arg1, arg3;
-    if (C) {
-        s1 = getPointsOnRight(points, &A, C);
-        s2 = getPointsOnRight(points, C, &B);
+    s1 = getPointsOnRight(points, A, C);
+    s2 = getPointsOnRight(points, C, B);
 
-        arg1 = QuickHullSub(A, *C, s1);
-        arg3 = QuickHullSub(*C, B, s2);
-    }
+    arg1 = QuickHullSub(A, C, s1);
+    arg3 = QuickHullSub(C, B, s2);
 
     //QHS(A,C,s1) + C + QHS(C,B,s2)
     vector<point*> vec;
-    if (C) {
-        vec.insert(vec.end(), arg1.begin(), arg1.end());
-        vec.push_back(C);
-        vec.insert(vec.end(), arg3.begin(), arg3.end());
-    }
+    vec.insert(vec.end(), arg1.begin(), arg1.end());
+    vec.push_back(C);
+    vec.insert(vec.end(), arg3.begin(), arg3.end());
     return vec;
 }
 
 //Quick Hull main
 vector<point*> QuickHull(vector<point> points) {
+    if (points.size() <=3) {
+        return vector<point*>();
+    }
+
     //to make things easier, {maxX} is a constant here
     point *A = getLeftmostPoint(points, 800);
     point *B = getRightmostPoint(points);
@@ -98,8 +100,8 @@ vector<point*> QuickHull(vector<point> points) {
     vector<point*> s1 = getPointsOnRight(points, A, B);
     vector<point*> s2 = getPointsOnRight(points, B, A);
 
-    vector<point*> arg2 = QuickHullSub(*A, *B, s1);
-    vector<point*> arg4 = QuickHullSub(*B, *A, s2);
+    vector<point*> arg2 = QuickHullSub(A, B, s1);
+    vector<point*> arg4 = QuickHullSub(B, A, s2);
 
     //A + QHS(A,B,s1) + B + QHS(B,A,s2)
     vector<point*> vec;

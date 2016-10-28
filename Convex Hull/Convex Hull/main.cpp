@@ -52,7 +52,7 @@ void makeHull(){
 int main() {
     srand((unsigned int)time(NULL));
 
-    window.create(sf::VideoMode(windowSize, windowSize), "Convex Hull", sf::Style::Close);
+    window.create(sf::VideoMode(windowSize, windowSize), "Convex Hull. Press R key to generate random points and hull.", sf::Style::Close);
 
     while (window.isOpen()) {
         sf::Event event;

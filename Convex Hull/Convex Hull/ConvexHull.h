@@ -18,7 +18,7 @@ vector<point*> getPointsOnRight(vector<point*> v, point *vL, point *vP);
 
 point *getFarthestPoint(LineEquation lineEquation, vector<point*> v);
 
-vector<point*> QuickHullSub(point A, point B, vector<point*> points);
+vector<point*> QuickHullSub(point *A, point *B, vector<point*> points);
 
 vector<point*> QuickHull(vector<point> points);
 
