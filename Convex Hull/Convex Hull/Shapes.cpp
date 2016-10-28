@@ -41,14 +41,7 @@ line::line(float x1, float y1, float x2, float y2) {
     rectangle.setPosition(x, y);
     rectangle.setFillColor(niceBlue);
 }
-line::line(sf::Vector2f pos, double angleInRadians, float lenght)
-{
-    rectangle = sf::RectangleShape(sf::Vector2f(3, lenght));
-    rectangle.setOrigin(rectangle.getSize().x / 2, rectangle.getSize().y / 2);
-    rectangle.setRotation((float)(angleInRadians*180.0/pi));
-    rectangle.setPosition(pos);
-    rectangle.setFillColor(niceBlue);
-}
+
 line::line(point p1, point p2) {
     x = (p1.x + p2.x) / 2;
     y = (p1.y + p2.y) / 2;

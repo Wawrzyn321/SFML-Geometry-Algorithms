@@ -14,19 +14,12 @@ class point;
 const double pi = 3.1415926535897932384626433832795;
 const sf::Color niceBlue = sf::Color(100, 100, 255);
 
+typedef sf::Vector3f LineEquation;
+
 double distance(float x1, float y1, float x2, float y2);
 
-double distance(sf::Vector2f v1, sf::Vector2f v2);
+LineEquation getLineEquation(sf::Vector2f a, sf::Vector2f b);
 
-
-double triangleArea(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f v3);
-
-bool isPointInTriangle(sf::Vector2f v, sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f v3);
-
-
-double angleBetweenVectors(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f v3, sf::Vector2f v4);
-
-double angleBetweenPoints(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f v3);
-
+double getSide(sf::Vector2f v, sf::Vector2f v1, sf::Vector2f v2);
 
 #endif // ! UTILITY_H

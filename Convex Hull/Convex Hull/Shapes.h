@@ -23,11 +23,8 @@ public:
     sf::RectangleShape rectangle;
     line() { }
     line(float x1, float y1, float x2, float y2);
-    line(sf::Vector2f pos, double angleInRadians, float lenght);
     line::line(point p1, point p2);
     void draw(sf::RenderWindow &wind);
 };
-
-
 
 #endif
