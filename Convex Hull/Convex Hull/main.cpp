@@ -43,7 +43,7 @@ void makeHull(){
     //join points
     for (unsigned i = 0; i < p.size(); i++) {
         lines.push_back(line(
-            *p[i],
+            *p[i % p.size()],
             *p[(i + 1) % p.size()]
         ));
     }
