@@ -28,4 +28,12 @@ public:
     void draw(sf::RenderWindow &wind);
 };
 
+class triangle {
+    sf::ConvexShape tri;
+public:
+    triangle(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f v3);
+    void setFillColor(sf::Color color);
+    void draw(sf::RenderWindow &wind);
+};
+
 #endif

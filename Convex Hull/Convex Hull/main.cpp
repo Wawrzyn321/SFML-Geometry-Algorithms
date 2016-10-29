@@ -9,14 +9,18 @@
 
 using namespace std;
 
-const int windowSize = 600;
+const int windowSize = 800;
 sf::RenderWindow window(sf::VideoMode(windowSize, windowSize), "Convex hull");
 
 vector<point> points;
 vector<line> lines;
+vector<triangle> triangles;
 
 void refreshWindow() {
     window.clear(sf::Color::Black);
+    for (unsigned int i = 0; i < triangles.size(); i++) {
+        triangles[i].draw(window);
+    }
     for (unsigned i = 0; i < points.size(); i++) {
         points[i].draw(window);
     }
@@ -46,6 +50,7 @@ void addRandomPoint(vector<point> &points, sf::Vector2u windowSize) {
 }
 
 void makeHull(){
+
     //get hull points
     vector<point*> p = QuickHull(points);
 
@@ -61,12 +66,29 @@ void makeHull(){
     }
 }
 
+void fillHull() {
+
+    //get hull points
+    vector<point*> p = QuickHull(points);
+
+    //fill convex hull with triangles
+    sf::Vector2f startPoint = p[0]->getPosition();
+    for (unsigned i = 1; i < p.size() - 1; i++) {
+        triangles.push_back(triangle(startPoint, p[i]->getPosition(), p[i + 1]->getPosition()));
+    }
+    //add lines indicating triangles
+    for (unsigned i = 1; i < p.size() - 1; i++) {
+        lines.push_back(line(startPoint, p[i]->getPosition()));
+        lines.back().rectangle.setScale(0.5f, 1);
+    }
+}
+
 int main() {
     srand((unsigned int)time(NULL));
 
     //int numOfPoints = 100;
 
-    window.create(sf::VideoMode(windowSize, windowSize), "Convex Hull. Use mouse scroll to add more points", sf::Style::Close);
+    window.create(sf::VideoMode(windowSize, windowSize), "Convex Hull. Use mouse scroll to add more points, F to fill the hull", sf::Style::Close);
 
     addRandomPoints(20, points, window.getSize());
     makeHull();
@@ -84,8 +106,10 @@ int main() {
                 makeHull();
             }
             */
+
             if (event.type == sf::Event::MouseWheelMoved)
             {
+                triangles.clear();
                 lines.clear();
                 if (event.mouseWheel.delta>0) {
                     //add more points
@@ -101,6 +125,15 @@ int main() {
                     makeHull();
                 }
             }
+
+
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F) {
+                if (points.size() > 2) {
+                    triangles.clear();
+                    fillHull();
+                }
+            }
+
         }
 
         refreshWindow();

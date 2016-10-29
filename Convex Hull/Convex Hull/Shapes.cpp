@@ -10,6 +10,7 @@ point::point(float ix, float iy) {
     circle.setPosition(x, y);
     circle.setFillColor(niceBlue);
 }
+
 void point::draw(sf::RenderWindow & wind)
 {
     wind.draw(circle);
@@ -67,4 +68,22 @@ line::line(sf::Vector2f v1, sf::Vector2f v2) {
 void line::draw(sf::RenderWindow & wind)
 {
     wind.draw(rectangle);
+}
+
+triangle::triangle(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f v3)
+{
+    tri.setPointCount(3);
+    tri.setPoint(0, v1);
+    tri.setPoint(1, v2);
+    tri.setPoint(2, v3);
+}
+
+void triangle::setFillColor(sf::Color color)
+{
+    tri.setFillColor(color);
+}
+
+void triangle::draw(sf::RenderWindow & wind)
+{
+    wind.draw(tri);
 }

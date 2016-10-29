@@ -91,15 +91,6 @@ vector<point*> QuickHull(vector<point> points) {
     if (points.size() < 2) {
         return vector<point*>();
     }
-    //a little faster
-    if (points.size() ==3) {
-        vector<point*> vec;
-        for (unsigned i = 0; i < 3; i++) {
-            vec.push_back(&points[i]);
-        }
-        return vec;
-    }
-
     //to make things easier, {maxX} is a constant here
     point *A = getLeftmostPoint(points, 800);
     point *B = getRightmostPoint(points);
