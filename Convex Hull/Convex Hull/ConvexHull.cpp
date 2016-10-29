@@ -88,8 +88,16 @@ vector<point*> QuickHullSub(point *A, point *B, vector<point*> points)
 
 //Quick Hull main
 vector<point*> QuickHull(vector<point> points) {
-    if (points.size() <=3) {
+    if (points.size() < 2) {
         return vector<point*>();
+    }
+    //a little faster
+    if (points.size() ==3) {
+        vector<point*> vec;
+        for (unsigned i = 0; i < 3; i++) {
+            vec.push_back(&points[i]);
+        }
+        return vec;
     }
 
     //to make things easier, {maxX} is a constant here

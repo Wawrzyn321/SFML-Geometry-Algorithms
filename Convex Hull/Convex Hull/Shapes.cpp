@@ -53,6 +53,17 @@ line::line(point p1, point p2) {
     rectangle.setFillColor(niceBlue);
 }
 
+line::line(sf::Vector2f v1, sf::Vector2f v2) {
+    x = (v1.x + v2.x) / 2;
+    y = (v1.y + v2.y) / 2;
+    rectangle = sf::RectangleShape(sf::Vector2f(3, (float)distance(v1.x, v1.y, v2.x, v2.y)));
+    rectangle.setOrigin(rectangle.getSize().x / 2, rectangle.getSize().y / 2);
+    float roto = -atan((v1.x - v2.x) / (v1.y - v2.y));
+    rectangle.setRotation(roto * 180 / (float)pi);
+    rectangle.setPosition(x, y);
+    rectangle.setFillColor(niceBlue);
+}
+
 void line::draw(sf::RenderWindow & wind)
 {
     wind.draw(rectangle);
