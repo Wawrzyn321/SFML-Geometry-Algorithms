@@ -101,6 +101,10 @@ private:
 	}
 
 	static void loadFrom4TreeFile(QuadTree<bool> **qt, string &s, int *it) {
+		if (qt == NULL) {
+			cout << "ERROR "+__LINE__ << endl;
+			return;
+		}
 		if (*it == s.size()) {
 			return;
 		}

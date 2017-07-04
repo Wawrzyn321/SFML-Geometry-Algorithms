@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Quadtree.h"
 
+#define BLACK_OR_WHITE bool
 #define WHITE false
 #define BLACK true
 
@@ -25,7 +26,7 @@ public:
 
 	void setResolution(unsigned resolution);
 
-	void preprocess();
+	void preprocess(bool performMonochromeCheck = true);
 
 	void create();
 
@@ -49,9 +50,11 @@ private:
 
 	void loadFromTree(RectUnsigned rect, QTBool *q);
 
-	bool checkColor(RectUnsigned rect, bool color);
+	bool isImageMonochrome();
 
-	void fillColor(RectUnsigned rect, bool color);
+	bool checkColor(RectUnsigned rect, BLACK_OR_WHITE color);
+
+	void fillColor(RectUnsigned rect, BLACK_OR_WHITE color);
 
 	bool isFloatRectGood(RectUnsigned &rect);
 };

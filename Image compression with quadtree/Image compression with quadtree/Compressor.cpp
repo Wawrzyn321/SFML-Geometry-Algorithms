@@ -22,7 +22,14 @@ void Compressor::setResolution(unsigned resolution) {
 	}
 }
 
-void Compressor::preprocess() {
+void Compressor::preprocess(bool performMonochromeCheck) {
+
+	if (performMonochromeCheck) {
+		if (isImageMonochrome()) {
+
+		}
+	}
+
 	sf::Color c;
 	for (unsigned i = 0; i < width; i++) {
 		for (unsigned j = 0; j < height; j++) {
@@ -48,6 +55,10 @@ void Compressor::create() {
 
 void Compressor::loadFromCompressor(Compressor * comp)
 {
+	if (comp == NULL) {
+		cout << "Compressor::loadFromCompressor: supplied compressor was null!" << endl;
+		return;
+	}
 	width = comp->width;
 	height = comp->height;
 	numberOfNodes = comp->numberOfNodes;
@@ -87,6 +98,10 @@ void Compressor::loadFrom4TreeFile(string name) {
 }
 
 void Compressor::check(RectUnsigned rect, QTBool **q) {
+	if (q == NULL) {
+		cout << "ERROR " + __LINE__ << endl;
+		return;
+	}
 	if (rect.width <= resolution || rect.height <= resolution) {
 		if (isFloatRectGood(rect)) {
 			(*q)->value = image.getPixel(rect.left, rect.top) == sf::Color::Black;
@@ -104,6 +119,10 @@ void Compressor::check(RectUnsigned rect, QTBool **q) {
 }
 
 void Compressor::checkBranch(RectUnsigned rect, QTBool **q) {
+	if (q == NULL) {
+		cout << "ERROR " + __LINE__ << endl;
+		return;
+	}
 	if (checkColor(rect, BLACK)) {
 		//all black
 		numberOfNodes++;
@@ -144,7 +163,27 @@ void Compressor::loadFromTree(RectUnsigned rect, QTBool * q)
 
 }
 
-bool Compressor::checkColor(RectUnsigned rect, bool color) {
+bool Compressor::isImageMonochrome()
+{
+	const sf::Uint8* pByteBuffer = image.getPixelsPtr();
+
+	size_t numPixels = width * height;
+	for (int i = 0; i < numPixels; i++)
+	{
+		sf::Uint8 red = pByteBuffer[4 * i];
+		sf::Uint8 green = pByteBuffer[4 * i + 1];
+		sf::Uint8 blue = pByteBuffer[4 * i + 2];
+		int sum = (int)(red + green + blue);
+		if (sum != 0 && sum != 255 * 3) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool Compressor::checkColor(RectUnsigned rect, BLACK_OR_WHITE color) {
+	//cout << rect.left << " " << rect.top << " " << rect.width << " " << rect.height << endl;
 	if (!isFloatRectGood(rect)) {
 		return false;
 	}
@@ -165,7 +204,7 @@ bool Compressor::checkColor(RectUnsigned rect, bool color) {
 	return true;
 }
 
-void Compressor::fillColor(RectUnsigned rect, bool color) {
+void Compressor::fillColor(RectUnsigned rect, BLACK_OR_WHITE color) {
 	if (!isFloatRectGood(rect)) {
 		return;
 	}
@@ -179,7 +218,7 @@ void Compressor::fillColor(RectUnsigned rect, bool color) {
 bool Compressor::isFloatRectGood(RectUnsigned & rect)
 {
 	if (rect.left < 0 || rect.top < 0)  return false;
-	if (rect.left + rect.width >= image.getSize().x)  return false;
-	if (rect.top+ rect.height>= image.getSize().y) return false;
+	if (rect.left + rect.width >= width)  return false;
+	if (rect.top+ rect.height>= height) return false;
 	return true;
 }
