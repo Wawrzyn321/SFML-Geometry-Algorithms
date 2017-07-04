@@ -1,22 +1,17 @@
 #include "Compressor.h"
 
-/*
-WHITE FALSE
-BLACK TRUE
-*/
-
-
 int main() {
 	sf::RenderWindow window;
 	window.create(sf::VideoMode(400, 300), "ICwQ", sf::Style::Default);
 	window.close();
 
-	const string filename = "guppy.jpg";
+	const string filename = "fatal.jpg";
 
 	Compressor c = Compressor(filename);
 	c.preprocess();
 	c.create();
 	cout << "nodes number: "<<c.getNodesNumber() << endl;
+	cout << "max height: " << c.getMaxTreeHeight() << endl;
 	c.saveToFile("TREE");
 	cout << "saved to file TREE.4tree" << endl;
 
